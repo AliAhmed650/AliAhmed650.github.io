@@ -1,0 +1,651 @@
+<title>Ali Ahmed Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Gloock&family=Cairo:wght@400;600;800;900&family=Cormorant+Garamond:wght@500;600;700&display=swap">
+<style>
+/* Layout: floating glass nav over a red-to-blush hero with the portrait cut out in front of a giant serif name, tilted marquee ribbons below, then calm cream sections of cards on a faint grid. */
+:root{
+  --bg:#f4efe9; --bg2:#ebe3dc; --card:#ece4dd; --card-solid:#f9f5f1; --line:#d9cdc4;
+  --ink:#2a1214; --ink2:#5b4a47; --red:#c3272e; --red-soft:#f0cfcb; --pink:#e3b9b3;
+  --glass:rgba(244,239,233,.72); --shadow:rgba(42,18,20,.14); --on-dark:#f4efe9; --btn:#2a1214;
+  --f-head:'Caprasimo','Gloock',Georgia,serif; --f-name:'Gloock','Times New Roman',serif;
+  --f-body:'Cormorant Garamond',Georgia,serif; --f-ar:'Cairo','Segoe UI',Tahoma,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#171010; --bg2:#1f1615; --card:#261c1b; --card-solid:#2b201f; --line:#3d2d2b;
+  --ink:#f4ebe4; --ink2:#c2b0aa; --red:#e5434a; --red-soft:#4a2124; --pink:#6a2f33;
+  --glass:rgba(30,22,21,.72); --shadow:rgba(0,0,0,.5); --on-dark:#171010; --btn:#f4ebe4; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171010; --bg2:#1f1615; --card:#261c1b; --card-solid:#2b201f; --line:#3d2d2b;
+  --ink:#f4ebe4; --ink2:#c2b0aa; --red:#e5434a; --red-soft:#4a2124; --pink:#6a2f33;
+  --glass:rgba(30,22,21,.72); --shadow:rgba(0,0,0,.5); --on-dark:#171010; --btn:#f4ebe4; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-weight:600;font-size:17px;line-height:1.55;overflow-x:hidden;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;background-attachment:local}
+body::after{content:"";position:fixed;inset:0;background:var(--bg);opacity:.93;pointer-events:none;z-index:-1}
+html[dir="rtl"] body{font-family:var(--f-ar);font-weight:600;font-size:16px;line-height:1.8}
+html[dir="rtl"] .eyebrow,html[dir="rtl"] .btn,html[dir="rtl"] .nav a,html[dir="rtl"] input,html[dir="rtl"] select,html[dir="rtl"] textarea{font-family:var(--f-ar)}
+h1,h2,h3,h4,p{margin:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{width:min(920px,100% - 2*max(16px,env(safe-area-inset-left,0px)) );margin-inline:auto}
+.wide{width:min(1000px,100% - 2*max(16px,env(safe-area-inset-left,0px)));margin-inline:auto}
+section{padding-block:72px}
+.eyebrow{color:var(--red);font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:6px}
+.title{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:clamp(26px,4.4vw,40px);line-height:1.1;text-wrap:balance}
+html[dir="rtl"] .title,html[dir="rtl"] .h-ar{font-family:var(--f-ar);font-weight:900;text-transform:none}
+.rule{display:flex;align-items:center;margin-top:14px;margin-bottom:34px}
+.rule::before{content:"";width:60px;height:2px;background:var(--red)}
+.rule::after{content:"";flex:1;height:1px;background:var(--line)}
+.lead{color:var(--ink2);max-width:46ch;margin-top:10px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:11px 20px;background:var(--btn);color:var(--on-dark);font-family:var(--f-body);font-weight:700;font-size:15px;box-shadow:3px 3px 0 var(--red);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--red)}
+.btn svg{width:14px;height:14px}
+html[dir="rtl"] .btn svg.arr{transform:scaleX(-1)}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;transition:opacity .5s,visibility .5s}
+#loader.gone{opacity:0;visibility:hidden}
+.ld{position:relative;display:grid;justify-items:center;gap:14px;padding:80px}
+.ld::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(195,39,46,.28),transparent 65%)}
+.ld svg{width:92px;position:relative;animation:pop .8s both}
+.ld b{font-family:var(--f-head);font-weight:400;font-size:44px;letter-spacing:.35em;margin-inline-end:-.35em;position:relative;animation:rise .8s .25s both}
+.ld small{position:relative;color:var(--red);letter-spacing:.35em;font-size:11px;font-weight:700;display:flex;align-items:center;gap:12px;animation:rise .8s .45s both}
+.ld small::before,.ld small::after{content:"";width:34px;height:1px;background:var(--red)}
+@keyframes pop{from{opacity:0;transform:scale(.7)}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+
+/* nav */
+.top{position:fixed;z-index:50;top:max(12px,env(safe-area-inset-top,0px));inset-inline:0;display:flex;justify-content:center;gap:10px;padding-inline:max(12px,env(safe-area-inset-left,0px))}
+.pill{background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;box-shadow:0 8px 26px var(--shadow)}
+.brand{display:grid;place-items:center;width:84px;height:44px}
+.brand svg{width:26px}
+.nav{display:flex;align-items:center;padding:5px}
+.nav a{padding:8px 17px;border-radius:999px;font-size:15px;font-weight:700;transition:background .2s,color .2s}
+.nav a:hover{color:var(--red)}
+.nav a.on{background:var(--red);color:#fff}
+.tools{display:flex;align-items:center;gap:6px;padding:5px}
+.tbtn{height:34px;min-width:34px;border-radius:999px;border:0;background:var(--btn);color:var(--on-dark);display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;font-size:13px;font-weight:800;box-shadow:2px 2px 0 var(--red)}
+.tbtn.round{padding:0;width:34px}
+.tbtn svg{width:15px;height:15px}
+.flag{width:18px;height:12px;border-radius:2px;background:linear-gradient(#ce1126 33%,#fff 33% 66%,#000 66%);display:inline-block}
+.burger{display:none}
+.mpanel{display:none}
+
+/* hero */
+.hero{position:relative;min-height:750px;padding-top:118px;overflow:hidden;
+  background:
+   linear-gradient(180deg,transparent 70%,var(--bg) 100%),
+   linear-gradient(100deg,#c5343a 0%,#dd8f8c 30%,#efcfc7 50%,#dd8f8c 70%,#c5343a 100%)}
+:root[data-theme="dark"] .hero{background:linear-gradient(180deg,transparent 70%,var(--bg) 100%),linear-gradient(100deg,#7d1b21 0%,#9c4048 30%,#b9807c 50%,#9c4048 70%,#7d1b21 100%)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero{background:linear-gradient(180deg,transparent 70%,var(--bg) 100%),linear-gradient(100deg,#7d1b21 0%,#9c4048 30%,#b9807c 50%,#9c4048 70%,#7d1b21 100%)}}
+.hero-name{position:absolute;inset-inline:0;top:96px;text-align:center;font-family:var(--f-name);font-size:clamp(70px,12.4vw,158px);line-height:1;color:#2a1214;white-space:nowrap;letter-spacing:-.02em;z-index:1}
+:root[data-theme="dark"] .hero-name{color:#f4ebe4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .hero-name{color:#f4ebe4}}
+.hero-ph{position:absolute;left:50%;bottom:62px;height:min(580px,80%);transform:translateX(-50%);z-index:2;filter:drop-shadow(0 20px 34px rgba(60,10,12,.35))}
+.hero-ph img{height:100%;width:auto;display:block}
+.hero-l,.hero-r{position:absolute;z-index:3;top:290px}
+.hero-l{inset-inline-start:max(16px,calc(50% - 470px));width:270px}
+.hero-r{inset-inline-end:max(16px,calc(50% - 480px));width:270px}
+.h-ar{font-family:var(--f-head);text-transform:uppercase;font-weight:400;line-height:1.12;font-size:clamp(20px,2.7vw,29px)}
+.hero-r .h-ar{text-align:start}
+.hero-r em{font-style:normal;color:var(--red)}
+.avail{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;margin:14px 0 10px}
+.avail i{width:8px;height:8px;border-radius:50%;background:#35c25a;box-shadow:0 0 0 4px rgba(53,194,90,.25)}
+.hero-l p{font-size:15px;line-height:1.4;max-width:30ch;color:var(--ink)}
+.hero-l .btns{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.hero-l .btn{padding:9px 16px;font-size:14px}
+.ribbon{direction:ltr;position:absolute;inset-inline:-4%;z-index:4;background:var(--red);color:#fff;overflow:hidden;white-space:nowrap}
+.ribbon.a{bottom:96px;height:54px;transform:rotate(-3.2deg);opacity:.92}
+.ribbon.b{bottom:0;height:62px}
+.ribbon div{display:inline-flex;align-items:center;height:100%;animation:mq 28s linear infinite;font-family:var(--f-name);font-size:22px}
+.ribbon.a div{animation-duration:34s;animation-direction:reverse}
+.ribbon span{padding-inline:20px;display:inline-flex;align-items:center;gap:40px}
+.ribbon span::after{content:"\2726";font-size:18px}
+@keyframes mq{to{transform:translateX(-50%)}}
+html[dir="rtl"] .ribbon div{font-family:var(--f-ar);font-weight:800;font-size:20px}
+
+/* rail + floating */
+.rail{position:fixed;z-index:40;inset-inline-start:max(26px,calc(50% - 540px));top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:18px}
+.rail a,.rail button{color:var(--ink);display:block;width:24px;height:24px;transition:color .2s,transform .2s}
+.rail a:hover{color:var(--red);transform:scale(1.15)}
+.rail svg,.sico svg{width:100%;height:100%;fill:currentColor}
+.ready small{color:var(--ink2)}
+.chat{position:fixed;z-index:45;left:max(18px,env(safe-area-inset-left,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));width:46px;height:46px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 8px 20px var(--shadow)}
+.chat svg{width:20px;fill:none;stroke:currentColor;stroke-width:2}
+.totop{position:fixed;z-index:45;right:max(18px,env(safe-area-inset-right,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));width:40px;height:40px;border-radius:50%;border:0;background:var(--btn);color:var(--on-dark);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s;box-shadow:2px 2px 0 var(--red)}
+.totop.show{opacity:1;pointer-events:auto}
+.totop svg{width:16px;fill:none;stroke:currentColor;stroke-width:2.4}
+@media (max-width:1180px){.rail{display:none}}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:18px;align-items:center}
+.blob{aspect-ratio:1/1.08;width:100%;max-width:330px;border-radius:58% 42% 52% 48%/46% 55% 45% 54%;overflow:hidden;background:radial-gradient(circle at 50% 25%,#a8161c,#4a070b 80%);box-shadow:0 0 70px rgba(195,39,46,.28);position:relative}
+.blob img{position:absolute;inset:auto 0 0 0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;mix-blend-mode:normal}
+.blob img.cut{object-fit:contain;object-position:50% 100%;height:96%;inset:auto 0 0 0}
+.card{background:var(--card-solid);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 40px var(--shadow)}
+.who{padding:26px 28px 30px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;border:1px solid var(--red);background:var(--red-soft);color:var(--ink2);font-size:12px;font-weight:700;margin-bottom:16px}
+.chip b{color:var(--red);font-size:16px}
+.who h3{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:30px;margin-bottom:14px}
+html[dir="rtl"] .who h3{font-family:var(--f-ar);font-weight:900;text-transform:none}
+.who h3 em,.who h3 span{font-style:normal;color:var(--red)}
+.who .big{font-size:18px;line-height:1.35;margin-bottom:14px}
+.who p+p{margin-top:10px;font-size:15px;color:var(--ink2);line-height:1.5}
+.sub{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:21px;margin:52px 0 16px}
+html[dir="rtl"] .sub{font-family:var(--f-ar);font-weight:900;text-transform:none}
+.tools5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.tl{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 8px 12px;text-align:center;transition:transform .2s}
+.tl:hover{transform:translateY(-4px)}
+.tl b{display:block;font-family:var(--f-head);font-weight:400;color:var(--red);font-size:30px;line-height:1.1}
+.tl span{display:block;font-size:13px;font-weight:700;margin-top:8px}
+
+/* why */
+.why{position:relative;margin-top:6px;padding-inline-start:0}
+.why::before{content:"";position:absolute;inset-inline-start:0;top:6px;bottom:6px;width:2px;background:var(--red)}
+.why li{list-style:none;display:grid;grid-template-columns:62px 1fr;gap:6px;padding:18px 0 18px 18px;border-bottom:1px solid var(--line);max-width:650px;position:relative}
+html[dir="rtl"] .why li{padding:18px 18px 18px 0}
+.why li::before{content:"";position:absolute;inset-inline-start:-4px;top:30px;width:7px;height:7px;border-radius:50%;background:var(--red);opacity:.6}
+.why{padding:0;margin:0}
+.why .n{font-family:var(--f-name);font-size:34px;color:#b7aaa2;line-height:1}
+.why li:hover .n,.why li:nth-child(n+3) .n{color:var(--red)}
+.why h4{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:14px;margin-bottom:4px}
+html[dir="rtl"] .why h4{font-family:var(--f-ar);font-weight:900;font-size:15px;text-transform:none}
+.why p{font-size:14px;color:var(--ink2);line-height:1.45}
+.brands{display:flex;flex-wrap:wrap;gap:10px}
+.brands a{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:700;transition:border-color .2s}
+.brands a:hover{border-color:var(--red);color:var(--red)}
+
+/* services */
+.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.art{height:150px;display:grid;place-items:center;position:relative;overflow:hidden;color:#fff}
+.art b{font-family:var(--f-name);font-size:50px;letter-spacing:-.02em;line-height:1;position:relative}
+.art::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(255,255,255,.28),transparent 50%)}
+.art.r{background:linear-gradient(135deg,#d03a3f,#8f1219)}
+.art.k{background:linear-gradient(135deg,#3a1d20,#120708)}
+.art.p{background:linear-gradient(135deg,#d99a94,#b24b4f)}
+.art.o{background:linear-gradient(135deg,#e5584c,#a21d28)}
+.sc .body{padding:18px 16px 16px;display:flex;flex-direction:column;flex:1}
+.sc h3{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:15px;margin-bottom:12px}
+html[dir="rtl"] .sc h3{font-family:var(--f-ar);font-weight:900;font-size:16px;text-transform:none}
+.sc ul{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:7px;font-size:14px;color:var(--ink2);line-height:1.35}
+.sc li{padding-inline-start:16px;position:relative}
+.sc li::before{content:"–";position:absolute;inset-inline-start:0;color:var(--red)}
+.sc .go{margin-top:auto;border-top:1px solid var(--line);padding-top:14px;display:flex;align-items:center;justify-content:space-between;font-weight:800;font-size:14px}
+.sc .go i{width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center}
+.sc .go svg{width:13px;fill:none;stroke:currentColor;stroke-width:2.4}
+html[dir="rtl"] .sc .go svg{transform:scaleX(-1)}
+
+/* stack */
+.rows{display:grid;gap:18px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);direction:ltr}
+.row{display:flex;gap:22px;width:max-content;animation:mq 40s linear infinite}
+.row:nth-child(2){animation-direction:reverse;animation-duration:48s}
+.lg{display:grid;place-items:center;min-width:132px;height:62px;padding-inline:18px;border:1px solid var(--line);border-radius:14px;background:var(--card);font-family:var(--f-name);font-size:20px;color:var(--ink)}
+.lg.r{color:var(--red)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:70px}
+.st{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px 20px;text-align:center;display:grid;justify-items:center;gap:16px;box-shadow:inset 0 0 0 1px transparent;transition:box-shadow .3s}
+.st:hover{box-shadow:inset 0 -3px 0 var(--red)}
+.st i{width:54px;height:54px;border-radius:50%;border:2px solid var(--red);color:var(--red);display:grid;place-items:center}
+.st i svg{width:24px;fill:none;stroke:currentColor;stroke-width:1.8}
+.st b{font-family:var(--f-name);font-weight:400;font-size:54px;line-height:1}
+.st b sup{font-size:.55em;vertical-align:baseline;color:var(--ink2)}
+.st span{font-weight:800;font-size:14px}
+
+/* works */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.work{position:relative;display:block;aspect-ratio:1/1.12;border-radius:6px;overflow:hidden;background:#222;color:#fff;isolation:isolate;transition:transform .25s}
+.work:hover{transform:translateY(-4px)}
+.work .bg{position:absolute;inset:0;display:grid;place-items:center;z-index:-1;text-align:center;padding:14px 14px 90px}
+.work .bg b{font-family:var(--f-name);font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.02em;text-wrap:balance}
+.work .bg b{max-width:100%}
+.work .bg b.arb{font-family:var(--f-ar);font-weight:900;font-size:clamp(40px,5.6vw,72px);line-height:1.25}
+.work .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 12%,rgba(255,255,255,.26),transparent 48%),repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 18px)}
+.work::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 42%,rgba(0,0,0,.72));z-index:-1}
+.work .cap{position:absolute;inset-inline:16px;bottom:14px}
+.work .tag{color:#ff8b8f;font-size:12px;font-weight:700;margin-bottom:3px;display:flex;justify-content:space-between;gap:8px}
+.work h3{font-family:var(--f-name);font-weight:400;font-size:19px;line-height:1.15}
+html[dir="rtl"] .work h3{font-family:var(--f-ar);font-weight:800;font-size:17px}
+.work p{font-size:13px;line-height:1.35;opacity:.86;margin-top:5px;max-height:0;overflow:hidden;transition:max-height .3s}
+.work:hover p,.work:focus-visible p{max-height:70px}
+.c1{background:linear-gradient(135deg,#cb3238,#5c0b10)}.c2{background:linear-gradient(135deg,#7440c9,#2a1163)}
+.c3{background:linear-gradient(135deg,#f0b43a,#c0561c)}.c4{background:linear-gradient(135deg,#1f9d8a,#0b3b45)}
+.c5{background:linear-gradient(135deg,#e28bb0,#8b2d5c)}.c6{background:linear-gradient(135deg,#2f3a4d,#0c1118)}
+.c7{background:linear-gradient(135deg,#4a7bd8,#1b2f73)}.c8{background:linear-gradient(135deg,#d96d4c,#7a2418)}
+.work .soon{position:absolute;top:12px;inset-inline-end:12px;z-index:2;background:rgba(0,0,0,.55);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px}
+.more{display:flex;justify-content:center;margin-top:34px}
+.chips2{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chips2 a{padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:700}
+.chips2 a:hover{border-color:var(--red);color:var(--red)}
+
+/* journey */
+.rev{display:grid;grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:30px;align-items:center}
+.rev .pic{aspect-ratio:1/.98;border-radius:18px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-family:var(--f-name);font-size:clamp(38px,6vw,58px);color:var(--ink);text-align:center;line-height:1.05;padding:10px;position:relative;overflow:hidden}
+.rev .pic::after{content:"";position:absolute;width:160px;height:160px;border-radius:50%;background:var(--red-soft);inset-inline-end:-40px;top:-40px;z-index:0}
+.rev .pic b{position:relative;z-index:1;font-weight:400}
+.rev h3{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:24px}
+html[dir="rtl"] .rev h3{font-family:var(--f-ar);font-weight:900;text-transform:none}
+.rev small{display:block;color:var(--ink2);margin:6px 0 10px;font-weight:700}
+.rev p.t{font-size:22px;line-height:1.3;font-family:var(--f-name);font-weight:400;margin-top:8px}
+html[dir="rtl"] .rev p.t{font-family:var(--f-ar);font-size:18px;font-weight:700}
+.arrows{display:flex;gap:8px;margin-top:20px}
+.ar{width:32px;height:32px;border-radius:50%;border:0;background:var(--btn);color:var(--on-dark);box-shadow:2px 2px 0 var(--red);display:grid;place-items:center}
+.ar svg{width:12px;fill:none;stroke:currentColor;stroke-width:2.6}
+html[dir="rtl"] .ar svg{transform:scaleX(-1)}
+.dots{display:flex;gap:6px;margin-top:16px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--red)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
+.form{padding:26px;display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;background:var(--card);border-radius:22px;border:1px solid var(--line)}
+.form .full{grid-column:1/-1}
+label{display:grid;gap:6px;font-size:13px;font-weight:800}
+input,select,textarea{width:100%;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--card-solid);border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+textarea{min-height:118px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--ink2);opacity:.65}
+.form .btn{width:100%;justify-content:center;border-radius:10px;padding:14px;font-size:15px;box-shadow:0 3px 0 var(--red)}
+.ready{grid-column:1/-1;border:1px dashed var(--red);border-radius:12px;padding:14px;font-size:14px;display:grid;gap:10px;background:var(--card-solid)}
+.ready pre{margin:0;white-space:pre-wrap;font:inherit;color:var(--ink2)}
+.ci{display:grid;gap:12px}
+.ic{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px;transition:transform .2s,border-color .2s}
+a.ic:hover{transform:translateX(3px);border-color:var(--red)}
+html[dir="rtl"] a.ic:hover{transform:translateX(-3px)}
+.ic.hl{background:var(--red-soft);border-color:var(--red)}
+.ic i{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--red);color:var(--red);display:grid;place-items:center}
+.ic i svg{width:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.ic i svg.f{fill:currentColor;stroke:none}
+.ic small{display:block;font-size:12px;color:var(--ink2);font-weight:700}
+.ic b{display:block;font-size:15px;overflow-wrap:anywhere;line-height:1.3}
+.follow{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;font-weight:800;font-size:14px}
+.follow div{display:flex;gap:8px}
+.sico{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;padding:8px;background:var(--card-solid)}
+.sico:hover{color:var(--red);border-color:var(--red)}
+
+/* footer */
+.cta{width:min(1040px,100% - 2*max(16px,env(safe-area-inset-left,0px)));margin:30px auto 0;background:var(--pink);border:1px solid var(--red);border-radius:26px;box-shadow:8px 8px 0 var(--red);overflow:hidden}
+.cta .up{text-align:center;padding:48px 20px 54px}
+.cta .up small{font-size:16px;color:var(--ink2);font-weight:700}
+.cta h2{font-family:var(--f-head);font-weight:400;text-transform:uppercase;font-size:clamp(24px,4.6vw,40px);margin:12px 0}
+html[dir="rtl"] .cta h2{font-family:var(--f-ar);font-weight:900;text-transform:none}
+.cta .up p{color:var(--ink2);font-size:16px}
+.cta .btns{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.cta .btn.ghost{background:var(--btn)}
+.foot{border-top:2px dashed var(--red);background:var(--card);padding:30px 28px;display:grid;grid-template-columns:1.3fr 1.5fr 1fr;gap:26px}
+.foot h5{margin:0 0 12px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:800}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px;font-size:14px;color:var(--ink2)}
+.foot .two{display:grid;grid-template-columns:1fr 1fr;gap:9px 24px}
+.foot a:hover{color:var(--red)}
+.foot p{font-size:14px;color:var(--ink2);max-width:28ch;margin:10px 0 14px}
+.foot .brand2 svg{width:30px}
+.foot .si{display:flex;gap:12px}
+.foot .si a{width:20px}
+.foot .si svg{fill:currentColor}
+.foot .top2{margin-top:10px;display:inline-flex}
+.copy{width:min(1040px,100% - 2*max(16px,env(safe-area-inset-left,0px)));margin:12px auto 0;padding-bottom:26px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink2);font-weight:700}
+
+/* responsive */
+@media (max-width:960px){
+  .hero{min-height:800px}
+  .nav,.tools .tbtn.dl{display:none}
+  .burger{display:inline-flex}
+  .mpanel{position:fixed;z-index:49;inset-inline:12px;top:calc(max(12px,env(safe-area-inset-top,0px)) + 56px);padding:10px;border-radius:22px;flex-direction:column;gap:2px}
+  .mpanel.open{display:flex}
+  .mpanel a{padding:12px 16px;border-radius:12px;font-weight:800}
+  .mpanel a.on{background:var(--red);color:#fff}
+  .top{justify-content:space-between}
+  .svc{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero{min-height:780px}
+  .hero-ph{height:440px;bottom:70px}
+  .hero-l{top:250px;width:210px}
+  .hero-r{top:250px;width:200px}
+}
+@media (max-width:700px){
+  section{padding-block:54px}
+  .hero{min-height:0;padding-bottom:210px;padding-top:100px}
+  .hero-name{position:relative;top:auto;font-size:clamp(56px,19vw,100px);margin-top:6px}
+  .hero-ph{position:relative;left:auto;bottom:auto;transform:none;height:330px;margin:-6px auto -14px;display:flex;justify-content:center}
+  .hero-l,.hero-r{position:relative;top:auto;inset-inline:auto;width:auto;padding-inline:max(18px,env(safe-area-inset-left,0px))}
+  .hero-r{order:1;margin-bottom:6px}
+  .hero{display:flex;flex-direction:column}
+  .hero-name{order:0}.hero-ph{order:2}.hero-l{order:3;margin-top:10px}
+  .hero-r{order:1}
+  .hero-l p{max-width:44ch}
+  .ribbon.a{bottom:72px;height:44px}.ribbon.b{height:52px}
+  .ribbon div{font-size:18px}
+  .about{grid-template-columns:1fr}
+  .blob{margin-inline:auto}
+  .tools5{grid-template-columns:repeat(3,1fr)}
+  .rev{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+  .form{grid-template-columns:1fr;padding:18px}
+  .stats{grid-template-columns:1fr}
+  .foot{grid-template-columns:1fr}
+  .tbtn.lang span.lt{display:none}
+}
+@media (max-width:520px){
+  .svc,.grid{grid-template-columns:1fr}
+  .work{aspect-ratio:1/.9}
+  .brand{width:60px}
+  .tools5{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<div id="loader" aria-hidden="true"><div class="ld">
+  <svg viewBox="0 0 48 48"><path d="M5 43 21 5h8l16 38H35L25 18 15 43z" fill="#c3272e"/><path d="M16 34h19l3 9H13z" fill="#8f1219"/></svg>
+  <b>ALI</b><small>AI DEVELOPER</small></div></div>
+
+<header class="top">
+  <a class="pill brand" href="#home" aria-label="Ali Ahmed"><svg viewBox="0 0 48 48"><path d="M5 43 21 5h8l16 38H35L25 18 15 43z" fill="#c3272e"/><path d="M16 34h19l3 9H13z" fill="#8f1219"/></svg></a>
+  <nav class="pill nav" id="nav" aria-label="Main">
+    <a href="#home" data-i="nav_home" class="on">Home</a><a href="#about" data-i="nav_about">About</a><a href="#services" data-i="nav_services">Services</a><a href="#stack" data-i="nav_stack">Stack</a><a href="#works" data-i="nav_works">Works</a><a href="#contact" data-i="nav_contact">Contact</a>
+  </nav>
+  <div class="pill tools">
+    <button class="tbtn round" id="theme" aria-label="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    <button class="tbtn lang" id="lang" aria-label="Language"><span id="langLbl">AR</span><i class="flag"></i></button>
+    <a class="tbtn dl" href="Ali_Ahmed_CV.pdf" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg><span data-i="dl">Download CV</span></a>
+    <button class="tbtn round burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<div class="pill mpanel" id="mpanel">
+  <a href="#home" data-i="nav_home">Home</a><a href="#about" data-i="nav_about">About</a><a href="#services" data-i="nav_services">Services</a><a href="#stack" data-i="nav_stack">Stack</a><a href="#works" data-i="nav_works">Works</a><a href="#contact" data-i="nav_contact">Contact</a><a href="Ali_Ahmed_CV.pdf" target="_blank" rel="noopener" data-i="dl">Download CV</a>
+</div>
+
+<aside class="rail" id="rail" aria-label="Social">
+  <a href="https://www.linkedin.com/in/aly-ahmed-040722424/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.5 2.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3 8.5h3.200V21H3zM9 8.500h3v1.700c.5-1 1.800-1.900 3.600-1.900 3.400 0 4.400 2.200 4.400 5.300V21h-3.200v-6.600c0-1.600-.4-2.800-2-2.800-1.700 0-2.600 1.200-2.600 2.900V21H9z"/></svg></a>
+  <a href="https://wa.me/201064872534" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:1.8"><path d="M21 12a9 9 0 0 1-13.400 7.800L3 21l1.300-4.500A9 9 0 1 1 21 12z"/><path d="M9 8c0 4 3 7 7 7l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400l.8-1-1-2z"/></svg></a>
+  <a href="https://github.com/AliAhmed650" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+  <a href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M5 2h14a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-4.5v-8h2.7l.5-3.3h-3.2V8.6c0-.9.4-1.7 1.8-1.7h1.5V4.1s-1.3-.2-2.5-.2c-2.6 0-4.3 1.6-4.3 4.4v2.4H7.7V14h2.8v8H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z"/></svg></a>
+</aside>
+
+<main id="home">
+<section class="hero">
+  <div class="hero-name" aria-hidden="true" id="heroName">Ali Ahmed</div>
+  <div class="hero-ph"><img src="ali_cut.webp" alt="Ali Ahmed"></div>
+  <div class="hero-l">
+    <div class="h-ar" data-i="h_l">I BUILD SMART SOFTWARE</div>
+    <div class="avail"><i></i><span data-i="h_av">Open to research internships and ML / software roles</span></div>
+    <p data-i="h_p">I turn ideas into working products: Flutter apps, Arabic-first web platforms and machine-learning models, shipped end to end.</p>
+    <div class="btns"><a class="btn" href="#contact"><span data-i="h_b1">Hire Me</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn" href="#works" data-i="h_b2">View My Work</a></div>
+  </div>
+  <div class="hero-r"><div class="h-ar" data-i="h_r">THAT TURNS IDEAS INTO <em>PRODUCTS</em>.</div></div>
+  <div class="ribbon a"><div id="rbA"></div></div>
+  <div class="ribbon b"><div id="rbB"></div></div>
+</section>
+
+<section id="about"><div class="wrap">
+  <div class="eyebrow" data-i="a_eye">Who am I</div>
+  <h2 class="title" data-i="a_title">An AI student building real products</h2><div class="rule"></div>
+  <div class="about">
+    <div class="blob"><img src="ali_photo.jpg" alt="Ali Ahmed" style="object-position:50% 20%"></div>
+    <div class="card who">
+      <div class="chip"><span data-i="a_chip">Graduating</span> <b>2027</b></div>
+      <h3 data-i="a_who">Who is <em>Ali</em>?</h3>
+      <p class="big" data-i="a_p1">A final-year Artificial Intelligence student who also ships complete cross-platform apps.</p>
+      <p data-i="a_p2">I'm Ali Ahmed, studying Computers and Artificial Intelligence at Minia National University. I work with Python, data science and machine learning, and I build apps with Flutter, Supabase and Firebase.</p>
+      <p data-i="a_p3">My projects include real-time multiplayer games, an admin dashboard for a restaurant menu and a Telegram-style chat app, with experience in NLP, regression and classification models.</p>
+      <p data-i="a_p4">I'm looking for a research internship or a software / ML role where I can turn ideas into working products.</p>
+    </div>
+  </div>
+
+  <h3 class="sub" data-i="a_tools">Tools I work with</h3>
+  <div class="tools5">
+    <div class="tl"><b>Py</b><span>Python</span></div><div class="tl"><b>Fl</b><span>Flutter</span></div><div class="tl"><b>Sb</b><span>Supabase</span></div><div class="tl"><b>Fb</b><span>Firebase</span></div><div class="tl"><b>ML</b><span>Scikit-learn</span></div>
+  </div>
+
+  <div style="margin-top:64px">
+    <div class="eyebrow" data-i="w_eye">Why me</div>
+    <h2 class="title" data-i="w_title">Why work with me?</h2>
+    <p class="lead" data-i="w_lead">For me, software is not just writing code, it is understanding the problem and shipping something people can install and use.</p>
+    <div class="rule" style="margin-bottom:10px"></div>
+    <ol class="why" id="why"></ol>
+  </div>
+
+  <h3 class="sub" data-i="b_title">Projects I built</h3>
+  <div class="brands">
+    <a href="#works">Refqa</a>
+    <a href="#works">Malik El-Tawla</a>
+    <a href="https://aliahmed650.github.io/restaurant-menu/" target="_blank" rel="noopener" data-i="b_menu">Digital Restaurant Menu</a>
+    <a href="#works">Wanas</a>
+  </div>
+</div></section>
+
+<section id="services"><div class="wide">
+  <div class="eyebrow" data-i="s_eye">What I offer</div>
+  <h2 class="title" data-i="s_title">My services</h2><div class="rule"></div>
+  <div class="svc" id="svc"></div>
+</div></section>
+
+<section id="stack"><div class="wide">
+  <div class="eyebrow" data-i="t_eye">Tools I trust</div>
+  <h2 class="title" data-i="t_title">Tech stack</h2><div class="rule"></div>
+  <div class="rows" id="rows"></div>
+  <div class="stats">
+    <div class="st"><i><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/></svg></i><b><span data-n="27">0</span><sup>+</sup></b><span data-i="st1">Public GitHub repos</span></div>
+    <div class="st"><i><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></i><b><span data-n="6">0</span><sup>+</sup></b><span data-i="st2">Apps and platforms built</span></div>
+    <div class="st"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i><b><span data-n="2027">0</span></b><span data-i="st3">Graduation year</span></div>
+  </div>
+</div></section>
+
+<section id="works"><div class="wide">
+  <div class="eyebrow" data-i="m_eye">From GitHub</div>
+  <h2 class="title" data-i="m_title">My work</h2><div class="rule"></div>
+  <div class="grid" id="grid"></div>
+  <div class="more"><button class="btn" id="moreBtn"><span data-i="m_more">More Projects</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+  <div class="chips2" id="chips2" hidden></div>
+</div></section>
+
+<section id="journey"><div class="wrap">
+  <div class="eyebrow" data-i="j_eye">Education and certificates</div>
+  <h2 class="title" data-i="j_title">My journey</h2><div class="rule"></div>
+  <div class="rev">
+    <div class="pic"><b id="jPic">2027</b></div>
+    <div>
+      <h3 id="jT">Minia National University</h3><small id="jS">Client</small>
+      <p class="t" id="jP"></p>
+      <div class="arrows"><button class="ar" id="jPrev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button class="ar" id="jNext" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div>
+      <div class="dots" id="jDots"></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="wide">
+  <div class="eyebrow" data-i="c_eye">Let's talk</div>
+  <h2 class="title" data-i="c_title">Contact me</h2><div class="rule"></div>
+  <div class="contact">
+    <form class="form" id="form" novalidate>
+      <label>Name<input id="f_name" placeholder="Your full name" autocomplete="name"></label>
+      <label>Email<input id="f_mail" type="email" placeholder="you@example.com" autocomplete="email"></label>
+      <label>WhatsApp<input id="f_wa" placeholder="01xxxxxxxxx" inputmode="tel"></label>
+      <label>Company<input id="f_co" placeholder="Company or team (optional)"></label>
+      <label class="full">Service needed<select id="f_srv"><option>Mobile App</option><option>Machine Learning</option><option>Web / Dashboard</option><option>Computer Vision / IoT</option><option>Other</option></select></label>
+      <label>Budget<select id="f_bud"><option value="">Select...</option><option>Internship / unpaid</option><option>Under 5,000 EGP</option><option>5,000 - 20,000 EGP</option><option>20,000+ EGP</option></select></label>
+      <label>Timeline<select id="f_tl"><option value="">Select...</option><option>Under 2 weeks</option><option>1 month</option><option>2-3 months</option><option>Flexible</option></select></label>
+      <label class="full">Project details<textarea id="f_msg" placeholder="Tell me a bit about your idea or the role..."></textarea></label>
+      <button class="btn full" type="submit" id="send">Send Message</button>
+      <div class="ready" id="ready" hidden><b id="rdyT">Message ready</b><pre id="rdyP"></pre><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn" id="copyBtn">Copy message</button><a class="btn" href="https://wa.me/201064872534" target="_blank" rel="noopener">WhatsApp</a><a class="btn" href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener">Facebook</a></div><small>Or email: alii.ahmed.21101@gmail.com</small></div>
+    </form>
+    <div class="ci">
+      <div class="ic hl"><i><svg viewBox="0 0 24 24"><path d="M12 21s7-6.200 7-12a7 7 0 0 0-14 0c0 5.800 7 12 7 12z"/><circle cx="12" cy="9" r="2.500"/></svg></i><div><small data-i="c_addr">Location</small><b>Minya, Egypt</b></div></div>
+      <a class="ic" href="mailto:alii.ahmed.21101@gmail.com"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></i><div><small data-i="c_mail">Email</small><b>alii.ahmed.21101@gmail.com</b></div></a>
+      <a class="ic" href="tel:01064872534"><i><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.500 1.500a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></i><div><small data-i="c_phone">Phone</small><b>01064872534</b></div></a>
+      <a class="ic" href="https://wa.me/201064872534" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.400 7.800L3 21l1.300-4.500A9 9 0 1 1 21 12z"/><path d="M9 8c0 4 3 7 7 7l1-2-2-1-1 .8c-1-.4-2-1.400-2.400-2.400l.8-1-1-2z"/></svg></i><div><small data-i="c_wa">WhatsApp</small><b data-i="c_wa2">Chat now</b></div></a>
+      <a class="ic" href="https://github.com/AliAhmed650" target="_blank" rel="noopener"><i><svg class="f" viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></i><div><small>GitHub</small><b>github.com/AliAhmed650</b></div></a>
+      <a class="ic" href="https://www.linkedin.com/in/aly-ahmed-040722424/" target="_blank" rel="noopener"><i><svg class="f" viewBox="0 0 24 24"><path d="M4.5 2.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3 8.5h3.200V21H3zM9 8.500h3v1.700c.5-1 1.800-1.900 3.600-1.900 3.400 0 4.400 2.200 4.400 5.300V21h-3.200v-6.600c0-1.600-.4-2.800-2-2.800-1.700 0-2.600 1.200-2.600 2.900V21H9z"/></svg></i><div><small>LinkedIn</small><b>Ali Ahmed</b></div></a>
+      <a class="ic" href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener"><i><svg class="f" viewBox="0 0 24 24"><path d="M5 2h14a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-4.5v-8h2.7l.5-3.3h-3.2V8.6c0-.9.4-1.7 1.8-1.7h1.5V4.1s-1.3-.2-2.5-.2c-2.6 0-4.3 1.6-4.3 4.4v2.4H7.7V14h2.8v8H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z"/></svg></i><div><small>Facebook</small><b>Ali Ahmed</b></div></a>
+      <a class="ic" href="Ali_Ahmed_CV.pdf" target="_blank" rel="noopener"><i><svg viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></svg></i><div><small>CV</small><b data-i="dl">Download CV</b></div></a>
+      <div class="follow"><span data-i="c_follow">Follow Me</span><div><a class="sico" href="https://www.linkedin.com/in/aly-ahmed-040722424/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.5 2.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3 8.5h3.200V21H3zM9 8.500h3v1.700c.5-1 1.800-1.900 3.600-1.900 3.400 0 4.400 2.200 4.400 5.300V21h-3.200v-6.600c0-1.600-.4-2.800-2-2.800-1.700 0-2.600 1.200-2.600 2.900V21H9z"/></svg></a><a class="sico" href="https://github.com/AliAhmed650" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a><a class="sico" href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M5 2h14a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-4.5v-8h2.7l.5-3.3h-3.2V8.6c0-.9.4-1.7 1.8-1.7h1.5V4.1s-1.3-.2-2.5-.2c-2.6 0-4.3 1.6-4.3 4.4v2.4H7.7V14h2.8v8H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z"/></svg></a></div></div>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<div class="cta">
+  <div class="up"><small data-i="f_ready">Ready to start?</small><h2 data-i="f_h">Let's build something different</h2><p data-i="f_p">Got a project, an idea, or just want to say hi? I'd love to hear from you.</p>
+    <div class="btns"><a class="btn" href="#contact"><span data-i="f_b1">Start a project</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn ghost" href="https://github.com/AliAhmed650" target="_blank" rel="noopener" data-i="f_b2">Say hello</a></div></div>
+  <div class="foot">
+    <div><div class="brand2"><svg viewBox="0 0 48 48"><path d="M5 43 21 5h8l16 38H35L25 18 15 43z" fill="#c3272e"/><path d="M16 34h19l3 9H13z" fill="#8f1219"/></svg></div><p data-i="f_about">AI student and app developer: machine learning, NLP and Flutter apps.</p>
+      <div class="si"><a href="https://www.linkedin.com/in/aly-ahmed-040722424/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M4.5 2.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM3 8.5h3.200V21H3zM9 8.500h3v1.700c.5-1 1.800-1.900 3.600-1.900 3.400 0 4.400 2.200 4.400 5.300V21h-3.200v-6.600c0-1.600-.4-2.800-2-2.800-1.700 0-2.600 1.200-2.600 2.900V21H9z"/></svg></a><a href="https://github.com/AliAhmed650" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg></a><a href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M5 2h14a3 3 0 0 1 3 3v14a3 3 0 0 1-3 3h-4.5v-8h2.7l.5-3.3h-3.2V8.6c0-.9.4-1.7 1.8-1.7h1.5V4.1s-1.3-.2-2.5-.2c-2.6 0-4.3 1.6-4.3 4.4v2.4H7.7V14h2.8v8H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3z"/></svg></a></div></div>
+    <div><h5 data-i="f_browse">Browse</h5><ul class="two"><li><a href="#about" data-i="nav_about">About</a></li><li><a href="#services" data-i="nav_services">Services</a></li><li><a href="#stack" data-i="nav_stack">Stack</a></li><li><a href="#works" data-i="nav_works">Works</a></li><li><a href="#journey" data-i="nav_journey">Journey</a></li><li><a href="#contact" data-i="nav_contact">Contact</a></li></ul></div>
+    <div><h5 data-i="f_touch">Get in touch</h5><ul><li><a href="https://github.com/AliAhmed650" target="_blank" rel="noopener">github.com/AliAhmed650</a></li><li><a href="https://www.linkedin.com/in/aly-ahmed-040722424/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://www.facebook.com/ali.ahmed.120331" target="_blank" rel="noopener">Facebook</a></li><li>alii.ahmed.21101@gmail.com</li><li>01064872534</li><li>Minya, Egypt</li></ul><a class="btn top2" href="#home" style="padding:8px 14px;font-size:13px"><span data-i="f_top">Top</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a></div>
+  </div>
+</div>
+<div class="copy"><span>&copy; ALI AHMED. All rights reserved.</span><span data-i="f_dev">Designed &amp; developed by Ali Ahmed</span></div>
+
+<a class="chat" href="#contact" aria-label="Contact"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.800 7L3 21l2-5.500A8 8 0 1 1 21 12z"/></svg></a>
+<button class="totop" id="totop" aria-label="Back to top"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+
+<script>
+const GH="https://github.com/AliAhmed650/";
+/* Live demo links. Add a project here (repo name: URL) and its card opens that link directly. */
+const LIVE={"restaurant-menu":"https://aliahmed650.github.io/restaurant-menu/"};
+const T={
+en:{nav_home:"Home",nav_about:"About",nav_services:"Services",nav_stack:"Stack",nav_works:"Works",nav_contact:"Contact",nav_journey:"Journey",dl:"Download CV",
+h_l:"I BUILD SMART SOFTWARE",h_r:"THAT TURNS IDEAS INTO <em>PRODUCTS</em>.",h_av:"Open to research internships and ML / software roles",h_p:"I turn ideas into working products: Flutter apps, Arabic-first web platforms and machine-learning models, shipped end to end.",h_b1:"Hire Me",h_b2:"View My Work",
+a_eye:"Who am I",a_title:"An AI student building real products",a_chip:"Graduating",a_who:"Who is <em>Ali</em>?",a_p1:"A final-year Artificial Intelligence student who also ships complete cross-platform apps.",a_p2:"I'm Ali Ahmed, studying Computers and Artificial Intelligence at Minia National University. I work with Python, data science and machine learning, and I build apps with Flutter, Supabase and Firebase.",a_p3:"My projects include real-time multiplayer games, an admin dashboard for a restaurant menu and a Telegram-style chat app, with experience in NLP, regression and classification models.",a_p4:"I'm looking for a research internship or a software / ML role where I can turn ideas into working products.",a_tools:"Tools I work with",
+w_eye:"Why me",w_title:"Why work with me?",w_lead:"For me, software is not just writing code, it is understanding the problem and shipping something people can install and use.",b_title:"Projects I built",b_menu:"Digital Restaurant Menu",
+s_eye:"What I offer",s_title:"My services",past:"See my past work",t_eye:"Tools I trust",t_title:"Tech stack",st1:"Public GitHub repos",st2:"Apps and platforms built",st3:"Graduation year",
+m_eye:"Selected projects",m_title:"My work",m_more:"More Projects",m_less:"Show fewer",m_all:"",soon:"Live demo link coming soon",
+j_eye:"Education and certificates",j_title:"My journey",c_eye:"Let's talk",c_title:"Contact me",c_addr:"Location",c_follow:"Follow Me",c_mail:"Email",c_phone:"Phone",c_wa:"WhatsApp",c_wa2:"Chat now",
+f_ready:"Ready to start?",f_h:"Let's build something different",f_p:"Got a project, an idea, or just want to say hi? I'd love to hear from you.",f_b1:"Start a project",f_b2:"Say hello",f_about:"AI student and app developer: machine learning, NLP and Flutter apps.",f_browse:"Browse",f_touch:"Get in touch",f_top:"Top",f_dev:"Designed & developed by Ali Ahmed",
+form:{Name:["Name","Your full name"],Email:["Email","you@example.com"],WhatsApp:["WhatsApp","01xxxxxxxxx"],Company:["Company","Company or team (optional)"],Srv:"Service needed",Bud:"Budget",Tl:"Timeline",Msg:["Project details","Tell me a bit about your idea or the role..."],Send:"Send Message",Ready:"Message ready. Copy it and send it by WhatsApp, email or Facebook.",Copy:"Copy message",Copied:"Copied",Need:"Please add your name and a short message first."},
+why:[["Ships complete products","From idea to an installable Android release: interface, backend, authentication and admin dashboard."],["Solid ML foundation","Regression, classification and NLP with Scikit-learn, Pandas and NLTK, evaluated with R² and MSE."],["Arabic-first interfaces","RTL layouts, Arabic content and local payment flows built for users in Egypt."],["Real-time features","Room codes, live lobbies and online matches built on Supabase realtime."],["Learns fast","Self-taught through documentation and research, and iterates on playtest feedback."]],
+svc:[["Mobile Apps","APPS","r",["Flutter apps for Android and iOS","Supabase and Firebase backends","Installable APK releases"]],["Machine Learning","ML","k",["Regression and classification models","Data cleaning and feature engineering","Clear evaluation with R² and MSE"]],["Web & Dashboards","WEB","p",["Arabic RTL sites and PWAs","Admin dashboards for products and orders","QR codes and payment confirmation"]],["Vision & IoT","VISION","o",["YOLO and face-landmark detection","ESP32 alarms","Fleet-monitoring dashboards"]]],
+cat:{app:"Mobile App",game:"Game",web:"Web",ml:"AI / Vision",ds:"Data Science"},
+journey:[["2027","Minia National University","Bachelor of Computers & Artificial Intelligence, expected 2027","Coursework in data structures, algorithms, machine learning, deep learning, statistics and probability, and database management."],["ITIDA","Freelance Training Program","ITIDA Gigs & eYouth, Certificate of Achievement","Completed the 3-month ITIDA Gigs freelance training program, certified by Eng. Ahmed El-Zaher, CEO of ITIDA."],["FREELANCE","Developer & Community Moderator","Experience","Technical tasks for clients and projects, including debugging and solving logic problems in Python scripts, plus community moderation and day-to-day support."],["KAGGLE","Competitions and research","Activities and strengths","Active in Kaggle competitions on NLP and tabular data, and preparing for undergraduate research internships and international scholarships."]]},
+ar:{nav_home:"الرئيسية",nav_about:"عني",nav_services:"الخدمات",nav_stack:"التقنيات",nav_works:"أعمالي",nav_contact:"تواصل",nav_journey:"رحلتي",dl:"تحميل السيرة الذاتية",
+h_l:"أبني برمجيات ذكية",h_r:"تحوّل الأفكار إلى <em>منتجات</em>.",h_av:"متاح لتدريب بحثي ووظائف الذكاء الاصطناعي والبرمجة",h_p:"أحوّل الأفكار إلى منتجات شغّالة: تطبيقات Flutter ومنصات ويب بالعربية ونماذج تعلّم آلي، من الفكرة حتى الإطلاق.",h_b1:"وظّفني",h_b2:"شوف أعمالي",
+a_eye:"من أنا",a_title:"طالب ذكاء اصطناعي يبني منتجات حقيقية",a_chip:"التخرج",a_who:"مين <em>علي</em>؟",a_p1:"طالب بالفرقة النهائية في الذكاء الاصطناعي، وبنفس الوقت بيطلّع تطبيقات كاملة تشتغل على أكتر من منصة.",a_p2:"أنا علي أحمد، بدرس الحاسبات والذكاء الاصطناعي في جامعة المنيا الأهلية. بشتغل بـ Python وعلم البيانات والتعلّم الآلي، وببني التطبيقات بـ Flutter وSupabase وFirebase.",a_p3:"من مشاريعي ألعاب جماعية أونلاين، ولوحة تحكم لمنيو مطعم رقمي، وتطبيق شات شبه تيليجرام، مع خبرة في معالجة اللغات ونماذج الانحدار والتصنيف.",a_p4:"بدوّر على تدريب بحثي أو وظيفة برمجة / تعلّم آلي أحوّل فيها الأفكار لمنتجات شغّالة.",a_tools:"الأدوات اللي بشتغل بيها",
+w_eye:"ليه أنا",w_title:"ليه تشتغل معايا؟",w_lead:"بالنسبالي البرمجة مش مجرد كتابة كود، هي فهم المشكلة وتسليم حاجة الناس تقدر تثبّتها وتستخدمها.",b_title:"مشاريع عملتها",b_menu:"المنيو الرقمي للمطاعم",
+s_eye:"اللي أقدمه",s_title:"خدماتي",past:"شوف أعمالي السابقة",t_eye:"أدوات أثق فيها",t_title:"التقنيات",st1:"مستودع عام على GitHub",st2:"تطبيق ومنصة اتبنت",st3:"سنة التخرج",
+m_eye:"مشاريع مختارة",m_title:"أعمالي",m_more:"مشاريع أكتر",m_less:"عرض أقل",m_all:"",soon:"رابط التجربة قريباً",
+j_eye:"التعليم والشهادات",j_title:"رحلتي",c_eye:"خلينا نتكلم",c_title:"تواصل معايا",c_addr:"الموقع",c_follow:"تابعني",c_mail:"الإيميل",c_phone:"الموبايل",c_wa:"واتساب",c_wa2:"كلمني دلوقتي",
+f_ready:"جاهز نبدأ؟",f_h:"خلينا نبني حاجة مختلفة",f_p:"عندك مشروع أو فكرة، أو عايز تقول أهلاً؟ يسعدني أسمع منك.",f_b1:"ابدأ مشروع",f_b2:"قول أهلاً",f_about:"طالب ذكاء اصطناعي ومطوّر تطبيقات: تعلّم آلي ومعالجة لغات وتطبيقات Flutter.",f_browse:"تصفّح",f_touch:"تواصل",f_top:"لأعلى",f_dev:"تصميم وتطوير علي أحمد",
+form:{Name:["الاسم","اسمك بالكامل"],Email:["الإيميل","you@example.com"],WhatsApp:["واتساب","01xxxxxxxxx"],Company:["الشركة","الشركة أو الفريق (اختياري)"],Srv:"الخدمة المطلوبة",Bud:"الميزانية",Tl:"المدة المتوقعة",Msg:["تفاصيل المشروع","احكيلي شوية عن فكرتك أو الوظيفة..."],Send:"إرسال الرسالة",Ready:"الرسالة جاهزة. انسخها وابعتها على واتساب أو الإيميل أو فيسبوك.",Copy:"نسخ الرسالة",Copied:"تم النسخ",Need:"اكتب اسمك ورسالة قصيرة الأول."},
+why:[["بسلّم منتجات كاملة","من الفكرة لحد نسخة أندرويد تتثبّت: واجهة وباك إند وتسجيل دخول ولوحة تحكم."],["أساس قوي في التعلّم الآلي","انحدار وتصنيف ومعالجة لغات بـ Scikit-learn وPandas وNLTK، مع تقييم بـ R² وMSE."],["واجهات عربية أولاً","تصميم RTL ومحتوى عربي وتدفقات دفع محلية للمستخدم المصري."],["ميزات لحظية","أكواد غرف وصالات انتظار مباشرة ولعب أونلاين على Supabase realtime."],["بتعلّم بسرعة","تعلّمت بنفسي من التوثيق والبحث، وبطوّر حسب ملاحظات التجربة."]],
+svc:[["تطبيقات الموبايل","APPS","r",["تطبيقات Flutter لأندرويد وiOS","باك إند Supabase وFirebase","نسخ APK جاهزة للتثبيت"]],["التعلّم الآلي","ML","k",["نماذج انحدار وتصنيف","تنظيف البيانات وهندسة الخصائص","تقييم واضح بـ R² وMSE"]],["ويب ولوحات تحكم","WEB","p",["مواقع RTL وتطبيقات PWA","لوحات إدارة المنتجات والطلبات","أكواد QR وتأكيد الدفع"]],["رؤية حاسوبية وIoT","VISION","o",["كشف بـ YOLO ونقاط الوجه","إنذارات ESP32","لوحات متابعة الأساطيل"]]],
+cat:{app:"تطبيق",game:"لعبة",web:"ويب",ml:"ذكاء اصطناعي",ds:"علم بيانات"},
+journey:[["2027","جامعة المنيا الأهلية","بكالوريوس الحاسبات والذكاء الاصطناعي، التخرج المتوقع 2027","دراسة هياكل البيانات والخوارزميات والتعلّم الآلي والتعلّم العميق والإحصاء والاحتمالات وإدارة قواعد البيانات."],["ITIDA","برنامج تدريب العمل الحر","ITIDA Gigs وeYouth، شهادة إنجاز","أنهيت برنامج ITIDA Gigs للعمل الحر لمدة 3 شهور، بشهادة من م. أحمد الظاهر، الرئيس التنفيذي لـ ITIDA."],["فريلانس","مطوّر ومشرف مجتمع","الخبرة","مهام تقنية للعملاء والمشاريع منها تصحيح الأخطاء وحل مشاكل المنطق في سكربتات Python، وإدارة المجتمع والدعم اليومي."],["KAGGLE","مسابقات وأبحاث","الأنشطة ونقاط القوة","نشط في مسابقات Kaggle للغات والبيانات الجدولية، وبجهّز لتدريبات بحثية ومنح دولية."]]}};
+
+const P=[
+{c:"c1",art:"رفقة",ar:1,cat:"game",tags:"Flutter · Dart · Supabase",repo:"refqa",en:["Refqa","Arabic-first party-games platform: trivia, hangman, word games, social deduction and the voice-chain Echo Chain. Room codes and live lobbies on Supabase."],a:["رفقة","منصة ألعاب جماعية بالعربي: أسئلة وهانج مان وألعاب كلمات وخداع اجتماعي وسلسلة الصوت. أكواد غرف وصالات مباشرة على Supabase."]},
+{c:"c3",art:"ملك الطاولة",ar:1,cat:"game",tags:"Flutter · Supabase · PWA",repo:"malik-tawla",en:["Malik El-Tawla","Egyptian coffeehouse domino with 2 and 4 players, team play and online tables by code. Started as a PWA, moved to Flutter."],a:["ملك الطاولة","دومينو القهوة المصري للاعبين وأربعة وفريقين وأونلاين بكود الطاولة. بدأ PWA وانتقل لـ Flutter."]},
+{c:"c8",art:"المنيو",ar:1,cat:"web",tags:"JavaScript · Supabase · Android",repo:"restaurant-menu",en:["Digital Restaurant Menu","Arabic RTL menu site with an admin dashboard for products, offers, orders, themes and QR codes, plus automatic payment confirmation from transfer SMS."],a:["المنيو الرقمي للمطاعم","موقع منيو RTL مع لوحة إدارة للمنتجات والعروض والطلبات والثيمات وأكواد QR، وتأكيد دفع تلقائي من رسائل التحويل."]},
+{c:"c2",art:"ونس",ar:1,cat:"app",tags:"Flutter · Firebase",repo:"wanas",en:["Wanas","Telegram-style real-time chat app for Android and iOS with its own identity. Firebase email authentication is done."],a:["ونس","تطبيق شات لحظي شبه تيليجرام لأندرويد وiOS بهوية خاصة. تسجيل الدخول بالإيميل عبر Firebase جاهز."]},
+{c:"c4",art:"Echo Chain",cat:"game",tags:"Flutter · Dart",repo:"echo_chain",en:["Echo Chain","The voice-chain party game, also a game mode inside Refqa."],a:["Echo Chain","لعبة سلسلة الصوت الجماعية، وهي كمان وضع لعب جوه رفقة."]},
+{c:"c6",art:"Drowsiness Alert",cat:"ml",tags:"Python · YOLO · ESP32",repo:"",en:["Driver Drowsiness System","Graduation project in progress: detects drowsiness from face landmarks and phone use with YOLO, triggers an ESP32 alarm and reports to a fleet dashboard."],a:["نظام إنذار نعاس السائق","مشروع التخرج قيد التنفيذ: كشف النعاس من نقاط الوجه واستخدام الموبايل بـ YOLO، وتشغيل إنذار ESP32 والتبليغ للوحة متابعة."]},
+{c:"c7",art:"R²",cat:"ds",tags:"Python · Scikit-learn",repo:"",en:["Insurance Cost Prediction","Regression model for premiums using Polynomial Features and Standard Scaling, evaluated with R² and MSE."],a:["توقّع تكلفة التأمين","نموذج انحدار لتقدير الأقساط بـ Polynomial Features وStandard Scaling، مقيَّم بـ R² وMSE."]},
+{c:"c5",art:"NLP",cat:"ds",tags:"Python · NLTK · Kaggle",repo:"",en:["NLP Product Review Analysis","Classified customer reviews with text cleaning, tokenization and engineered features to surface sentiment patterns."],a:["تحليل مراجعات المنتجات","تصنيف مراجعات العملاء بتنظيف النص والتجزئة وهندسة الخصائص لإظهار أنماط المشاعر."]},
+{c:"c1",art:"PageRank",cat:"ds",tags:"Python · Graph algorithms",repo:"",en:["Web Search & PageRank","PageRank implementation to simulate page ranking from link structure, plus duplicate detection to keep crawled data clean."],a:["محرك بحث وPageRank","تنفيذ PageRank لمحاكاة ترتيب الصفحات من الروابط، مع كشف التكرار لتنظيف البيانات."]}];
+const MORE=[["Noor Azkar","noor-azkar"],["Quran Player","quran_player"],["Masrofy","masrofy"],["Wasla App","wasla_app"],["English Listening","english_listening"],["Athar Store","athar-store"],["Stream Vault","Stream-Vault"],["NABD","NABD"],["Hisn","hisn"],["Sa7by","sa7by"],["Animal World","animal_world"],["Noor App","noor_app"],["Wedding Invite Template","wedding-invite-template"],["Cafe Prototype","cafe-prototype"],["Malazemy Releases","malazemy-releases"],["Foodics Training","foodics-training"]];
+const STACK=["Python","Flutter","Dart","Supabase","Firebase","PostgreSQL","Scikit-learn","Pandas","NumPy","NLTK","YOLO","ESP32","JavaScript","Git / GitHub","Jupyter","Kaggle","Matplotlib","Seaborn"];
+const RB=["Machine Learning","NLP","Flutter Apps","Computer Vision","Supabase","Arabic RTL"];
+
+let lang="en",showAll=false,ji=0;
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+function renderStatic(){
+  const t=T[lang];
+  $$("[data-i]").forEach(e=>{const v=t[e.dataset.i];if(v!==undefined)e.innerHTML=v});
+  $("#why").innerHTML=t.why.map((w,i)=>`<li><span class="n">0${i+1}</span><div><h4>${w[0]}</h4><p>${w[1]}</p></div></li>`).join("");
+  $("#svc").innerHTML=t.svc.map(s=>`<article class="sc"><div class="art ${s[2]}"><b>${s[1]}</b></div><div class="body"><h3>${s[0]}</h3><ul>${s[3].map(x=>`<li>${x}</li>`).join("")}</ul><a class="go" href="#works"><span>${t.past}</span><i><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a></div></article>`).join("");
+  const f=t.form;
+  const lab=(id,txt,ph)=>{const l=$("#"+id).parentElement;l.firstChild.textContent=txt;if(ph)$("#"+id).placeholder=ph};
+  lab("f_name",f.Name[0],f.Name[1]);lab("f_mail",f.Email[0],f.Email[1]);lab("f_wa",f.WhatsApp[0],f.WhatsApp[1]);lab("f_co",f.Company[0],f.Company[1]);lab("f_srv",f.Srv);lab("f_bud",f.Bud);lab("f_tl",f.Tl);lab("f_msg",f.Msg[0],f.Msg[1]);
+  $("#send").textContent=f.Send;$("#copyBtn").textContent=f.Copy;$("#rdyT").textContent=f.Ready;
+  $("#heroName").textContent=lang==="en"?"Ali Ahmed":"علي أحمد";
+  $("#heroName").style.fontFamily=lang==="en"?"":"var(--f-ar)";
+  $("#heroName").style.fontWeight=lang==="en"?"":"800";$("#heroName").style.lineHeight=lang==="en"?"":"1.35";$("#heroName").style.fontSize=lang==="en"?"":"clamp(50px,8.6vw,112px)";
+  const rb=lang==="en"?RB:["تعلّم آلي","معالجة لغات","تطبيقات Flutter","رؤية حاسوبية","Supabase","واجهات عربية"];
+  const strip=rb.map(x=>`<span>${x}</span>`).join("").repeat(4);
+  $("#rbA").innerHTML=strip+strip;$("#rbB").innerHTML=strip+strip;
+  renderWorks();renderJourney();
+}
+function renderWorks(){
+  const t=T[lang],list=showAll?P:P.slice(0,6);
+  $("#grid").innerHTML=list.map(p=>{
+    const d=lang==="en"?p.en:p.a,tag=(p.repo?"<a>":"");
+    const inner=`<div class="bg ${p.c}"><b class="${p.ar?"arb":""}">${p.art}</b></div><div class="cap"><div class="tag"><span>${t.cat[p.cat]}</span><span>${p.tags}</span></div><h3>${d[0]}</h3><p>${d[1]}</p></div>`;
+    const url=LIVE[p.repo];
+    const soon="";
+    return url?`<a class="work" href="${url}" target="_blank" rel="noopener">${inner}</a>`:`<div class="work" tabindex="0">${soon}${inner}</div>`}).join("");
+  $("#moreBtn").firstElementChild.textContent=showAll?t.m_less:t.m_more;
+  $("#chips2").hidden=true;
+}
+function renderJourney(){
+  const j=T[lang].journey[ji];
+  $("#jPic").textContent=j[0];$("#jT").textContent=j[1];$("#jS").textContent=j[2];$("#jP").textContent=j[3];
+  $("#jDots").innerHTML=T[lang].journey.map((_,i)=>`<i class="${i===ji?"on":""}"></i>`).join("");
+}
+function setLang(l){
+  lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+  $("#langLbl").textContent=l==="ar"?"EN":"AR";store("lang",l);renderStatic();
+}
+function setTheme(m){
+  if(m)document.documentElement.setAttribute("data-theme",m);else document.documentElement.removeAttribute("data-theme");
+}
+let theme=store("theme");
+if(theme)setTheme(theme);
+$("#theme").onclick=()=>{
+  const dark=document.documentElement.getAttribute("data-theme")==="dark"||(!document.documentElement.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);
+  theme=dark?"light":"dark";setTheme(theme);store("theme",theme)};
+$("#lang").onclick=()=>setLang(lang==="en"?"ar":"en");
+$("#moreBtn").onclick=()=>{showAll=!showAll;renderWorks()};
+$("#jPrev").onclick=()=>{ji=(ji+3)%4;renderJourney()};
+$("#jNext").onclick=()=>{ji=(ji+1)%4;renderJourney()};
+$("#burger").onclick=()=>$("#mpanel").classList.toggle("open");
+$$("#mpanel a").forEach(a=>a.addEventListener("click",()=>$("#mpanel").classList.remove("open")));
+
+/* stack rows */
+(function(){
+  const mk=(arr,off)=>{const h=arr.map((s,i)=>`<div class="lg ${(i+off)%3===0?"r":""}">${s}</div>`).join("");return `<div class="row">${h+h}</div>`};
+  const a=STACK.slice(0,9),b=STACK.slice(9);
+  $("#rows").innerHTML=mk(a,0)+mk(b,1);
+})();
+
+/* nav highlight + totop */
+const secs=["home","about","services","stack","works","journey","contact"].map(id=>document.getElementById(id));
+function onScroll(){
+  const y=scrollY+140;let cur="home";
+  secs.forEach(s=>{if(s&&s.offsetTop<=y)cur=s.id});
+  if(cur==="journey")cur="works";
+  $$("#nav a,#mpanel a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+cur));
+  $("#totop").classList.toggle("show",scrollY>600);
+}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+$("#totop").onclick=()=>scrollTo({top:0,behavior:"smooth"});
+
+/* count up */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;io.unobserve(e.target);
+  const n=+e.target.dataset.n,t0=performance.now(),d=1200;
+  const step=t=>{const k=Math.min(1,(t-t0)/d);e.target.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step)}),{threshold:.4});
+$$("[data-n]").forEach(e=>{e.textContent=e.dataset.n;io.observe(e)});
+
+/* form */
+$("#form").addEventListener("submit",e=>{
+  e.preventDefault();
+  const n=$("#f_name").value.trim(),m=$("#f_msg").value.trim();
+  if(!n||!m){$("#send").textContent=T[lang].form.Need;setTimeout(()=>$("#send").textContent=T[lang].form.Send,2600);return}
+  const lines=[`Name: ${n}`,$("#f_mail").value&&`Email: ${$("#f_mail").value}`,$("#f_wa").value&&`WhatsApp: ${$("#f_wa").value}`,$("#f_co").value&&`Company: ${$("#f_co").value}`,`Service: ${$("#f_srv").value}`,$("#f_bud").value&&`Budget: ${$("#f_bud").value}`,$("#f_tl").value&&`Timeline: ${$("#f_tl").value}`,"",m].filter(x=>x!==""&&x!==false&&x!==undefined);
+  $("#rdyP").textContent=lines.join("\n");$("#ready").hidden=false;
+});
+$("#copyBtn").onclick=async()=>{
+  const txt=$("#rdyP").textContent;
+  try{await navigator.clipboard.writeText(txt);$("#copyBtn").textContent=T[lang].form.Copied}catch(e){const r=document.createRange();r.selectNodeContents($("#rdyP"));const s=getSelection();s.removeAllRanges();s.addRange(r)}
+  setTimeout(()=>$("#copyBtn").textContent=T[lang].form.Copy,1800)};
+
+/* init */
+const sl=store("lang");
+setLang(sl==="ar"?"ar":"en");
+setTimeout(()=>$("#loader").classList.add("gone"),matchMedia("(prefers-reduced-motion:reduce)").matches?100:1700);
+</script>
